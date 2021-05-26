@@ -10,4 +10,16 @@ node {
      archiveArtifacts 'target/*.war'
       // archiveArtifacts 'target/*.war'
      }
+	
+	stage ('sonar') {
+    // performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
+    withSonarQubeEnv('SonarQube_scan') {
+      // requires SonarQube Scanner for Maven 3.2+
+      sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+    }
+  }
+	
+	
+	
+	
 }
