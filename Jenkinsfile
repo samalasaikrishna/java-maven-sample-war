@@ -28,7 +28,38 @@ fileOperations([fileZipOperation(folderPath: 'target/Example-0.0.1-SNAPSHOT.war'
                // sh 'cd ${WORKSPACE}/zip_test'
                 sh 'mv ${WORKSPACE}/zip/*.zip ${WORKSPACE}/zip/${BUILD_NUMBER}-Example.zip'
 }
+
+stage ('Publish_Artifacts') {
+//This will upload generated zip file to artifactory repo-spring-petclinic
+     rtUpload (
+             buildName: JOB_NAME,
+                buildNumber: BUILD_NUMBER,
+          serverId: 'JFrog',
+           spec: '''{
+              "files": [
+                 {
+                    "pattern": "zip/*.zip",
+                    "target": "SDP-maven-Local",
+                    "recursive": "false"
+                 }
+                        ]
+                     }''')
+    }
+	stage ('Publish build info') {
+//This will publish the build info in json format to artifactory
+            //steps {
+                rtPublishBuildInfo (
+                    buildName: JOB_NAME,
+                    buildNumber: BUILD_NUMBER,
+                    serverId: 'JFrog'
+                                   )
+                  //}
+                             }
 	
+	stage('clean workspace') {
+       sh 'mvn clean'
+            sh 'rm -rf ${WORKSPACE}/zip/*'
+        }
 	
 	
 }
