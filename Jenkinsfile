@@ -75,7 +75,7 @@ stage ('Publish_Artifacts') {
 	
 	stage('cd'){
 		sh 'ssh ansible@3.142.205.70'
-		sh 'cd ~/playbooks/'
+		//sh 'cd ~/playbooks/'
 		//echo "changed to playbooks path"
 		sh 'ansible-playbook -i hosts Example.yml'
 		//echo "executed yml file"
