@@ -57,7 +57,7 @@ stage ('Publish_Artifacts') {
                              }
 	
 	stage('clean workspace') {
-       sh 'mvn clean'
+      // sh 'mvn clean'
             sh 'rm -rf ${WORKSPACE}/zip/*'
         }
 	
@@ -73,13 +73,13 @@ stage ('Publish_Artifacts') {
 	
 	//}
 	
-	stage('cd'){
-		sh 'ssh ansible@3.142.205.70'
+	//stage('cd'){
+		//sh 'ssh ansible@3.142.205.70'
 		//sh 'cd ~/playbooks/'
 		//echo "changed to playbooks path"
-		sh 'ansible-playbook -i /home/ansible/playbooks/hosts /home/ansible/playbooks/Example.yml'
+		//sh 'ansible-playbook -i /home/ansible/playbooks/hosts /home/ansible/playbooks/Example.yml'
 		//echo "executed yml file"
-	}
+	//}
 	
 	
 }
